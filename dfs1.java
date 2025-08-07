@@ -88,7 +88,58 @@ public class dfs1 {
         
         }
         return false;
+
     }
+    public static class Pair implements Comparable<Pair>{
+        int node;
+        int dist;
+
+        public Pair(int n ,int d){
+          this.node =n;
+          this.dist =d;
+        }
+        @Override
+        public int compareTo(Pair p2){
+            return this.dist -p2.dist;
+        }
+
+    }
+
+    public static void dijkstra(ArrayList<Edge> graph[],int src,int V){
+        PriorityQueue<Pair> pq =new PriorityQueue<>();
+        int dist[]=new int[V];
+        for(int i =0;i<V;i++){
+            if(i!=src){
+                dist[i]=Integer.MAX_VALUE;
+            }
+        }
+        boolean vis[] =new boolean[V];
+
+        pq.add(new Pair(src,0));
+
+        while(!pq.isEmpty()){
+            Pair curr =pq.remove();
+            if(!vis[curr.node]){
+                vis[curr.node] =true;
+                for(int i=0;i<graph[curr.node].size();i++){
+                    Edge e = graph[curr.node].get(i);
+                    int u =e.src;
+                    int v =e.dest;
+                    if(dist[u]+e.wt<dist[v]){
+                        dist[v]=dist[u]+e.wt;
+                        pq.add(new Pair(v,dist[v]));
+                    }
+
+                }
+            }
+            
+        }
+        for(int i =0;i<V;i++){
+            System.out.println(dist[i]+ " ");
+        }
+        System.out.println();
+    }
+
 
 
 
@@ -97,8 +148,8 @@ public class dfs1 {
         ArrayList<Edge>[] graph = new ArrayList[V];
 
         createGraph(graph);
-        int curr =0;
-        System.out.println(isCycleUndirected(graph,new boolean[V],curr,-1));
+
+        // System.out.println(isCycleUndirected(graph,new boolean[V],curr,-1));
 
         // Check cycle
         // boolean[] visited = new boolean[V];
@@ -120,6 +171,8 @@ public class dfs1 {
         // if (!cycleExists) {
         //     topSort(graph, V);
         // }
+        int src =0;
+        dijkstra(graph,src,V);
     }
 }
     
