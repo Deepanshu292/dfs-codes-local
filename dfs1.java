@@ -84,6 +84,21 @@ public class dfs1 {
                 if(isCycleUndirected(graph, vis ,e.dest ,curr)){
                     return true;
                 }
+    public static void dijkstra(ArrayList<Edge> graph[],int src,int V){
+        PriorityQueue<Pair> pq =new PriorityQueue<>();
+        int dist[]=new int[V];
+        for(int i =0;i<V;i++){
+            if(i!=src){
+                dist[i]=Integer.MAX_VALUE;
+            }
+        }
+        boolean vis[] =new boolean[V];
+
+        pq.add(new Pair(src,0));
+
+        while(!pq.isEmpty()){
+            Pair curr =pq.remove();
+            if(!vis[curr.node]){
             }
         
         }
@@ -105,21 +120,6 @@ public class dfs1 {
 
     }
 
-    public static void dijkstra(ArrayList<Edge> graph[],int src,int V){
-        PriorityQueue<Pair> pq =new PriorityQueue<>();
-        int dist[]=new int[V];
-        for(int i =0;i<V;i++){
-            if(i!=src){
-                dist[i]=Integer.MAX_VALUE;
-            }
-        }
-        boolean vis[] =new boolean[V];
-
-        pq.add(new Pair(src,0));
-
-        while(!pq.isEmpty()){
-            Pair curr =pq.remove();
-            if(!vis[curr.node]){
                 vis[curr.node] =true;
                 for(int i=0;i<graph[curr.node].size();i++){
                     Edge e = graph[curr.node].get(i);
