@@ -150,11 +150,58 @@ public class bfs17 {
             }
         }
 
+        for (int i = 0; i < V; i++) {
+                for (int j = 0; j < graph[i].size(); j++) {
+                    Edge e = graph[i].get(j);
+                    int u = e.src;
+                    int v = e.dest;
+                    if (dist[u] != Integer.MAX_VALUE && dist[u] + e.wt < dist[v]) {
+                        System.out.println("negative wt cycle exists");
+                    }
+                }
+            }
+
         System.out.println("Bellman-Ford distances:");
         for (int i = 0; i < dist.length; i++) {
             System.out.print(dist[i] + " ");
         }
         System.out.println();
+    }
+    public static class Pair implements Comparable<Pair> {
+        int node;
+        int cost;
+
+        public Pair(int n ,int c){
+            this.node =n;
+            this.cost =c;
+        }
+        @Override
+        public int compareTo(Pair p2){
+            return this.cost - p2.cost;
+        }
+    }
+    public static void  primsAlgo(ArrayList<Edge> graph[],int V){
+        PriorityQueue<Pair> pq =new PriorityQueue<>();
+        boolean vis[] =new boolean[V];
+        pq.add(new Pair(0,0));
+
+        int mstCost =0;
+        while(!pq.isEmpty()){
+            Pair curr =pq.remove();
+            if(!vis[curr.node]){
+                vis[curr.node] =true;
+                mstCost += curr.cost;
+
+                for(int i =0;i<graph[curr.node].size();i++){
+                    Edge e = graph[curr.node].get(i);
+                    if(!vis[e.dest]){
+                        pq.add(new Pair(e.dest ,e.wt));
+                    }
+                }
+            }
+        }
+        System.out.println(mstCost);
+
     }
 
     public static void main(String[] args) {
@@ -166,6 +213,10 @@ public class bfs17 {
 
         // Run Bellman–Ford
         bellmanFord(graph, src, V);
+
+        //prims algo
+        primsAlgo(graph,V);
+        
 
         // Run Dijkstra
         dijkstra(graph, src, V);
