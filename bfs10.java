@@ -1,5 +1,7 @@
 import java.util.*;
-public class bfs18 {
+public class bfs10 {
+   
+
    
 
 
@@ -205,6 +207,65 @@ public class bfs18 {
         System.out.println(mstCost);
 
     }
+    public static void dfs(ArrayList<Edge> graph[],int curr ,boolean vis[]){
+        vis[curr]=true;
+
+        for(int i=0;i<graph[curr].size();i++){
+            Edge e= graph[curr].get(i);
+            if(!vis[e.dest]){
+                dfs(graph,e.dest,vis);
+
+            }
+        }
+    }
+
+    public static void topSort(ArrayList<Edge> graph[], int curr ,boolean vis[],Stack<Integer> s){
+        vis[curr]=true;
+        System.out.println(curr+" ");
+
+        for(int i =0;i<graph[curr].size();i++){
+            Edge e =garph[curr].get(i);
+            if(!vis[e.dest]){
+                topSort(graph,e.dest,vis, s);
+            }
+        }
+        s.push(curr);
+    }
+    public static void kosarajuAlgo(ArrayList<Edge> graph[],int V){
+        Stack<Integer> s =new Stack<>();
+        boolean vis[] =new boolean(V);
+        for(int i =0;i<V;i++){
+            if(!vis[i]){
+                topSort(graph,i,vis,s);
+            }
+
+        }
+        ArrayList<Edge> transpose[]= new ArrayList[V];
+        
+        for(int i=0;i<graph.length;i++){
+            vis[i]=false;
+            
+            transpose[i]= new ArrayList<Edge>();
+
+        }
+        for(int i =0;i<V;i++){
+            for(j=0;j<graph[i].size();j++){
+                Edge e = graph[i].get(j);
+                transpose[e.dest].add(new Edge(e.dest,e.src));
+            }
+        }
+        while(!s.isEmpty()){
+            int curr =s.pop();
+            if(!vis[curr]){
+                dfs(transpose,curr, vis);
+                System.out.println();
+            }
+            
+        }
+
+
+         
+    }
 
     public static void main(String[] args) {
         int V = 4;
@@ -218,6 +279,9 @@ public class bfs18 {
 
         //prims algo
         primsAlgo(graph,V);
+
+        //kosaraju algo
+        kosarajuAlgo(graph,V);
         
 
         // Run Dijkstra
@@ -247,5 +311,8 @@ public class bfs18 {
 
 
     
+    
+
+
     
 
