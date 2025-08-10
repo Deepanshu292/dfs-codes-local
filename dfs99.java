@@ -1,6 +1,8 @@
 import java.util.*;
+public class dfs99 {
+    
 
-public class dfs5 {
+
 
     static class Edge {
         int src, dest, wt;
@@ -107,13 +109,18 @@ public class dfs5 {
         }
         System.out.println();
     }
+    @SuppressWarnings("unchecked")
 
     public static void main(String[] args) {
         int V = 4;
+        @SuppressWarnings("unchecked")
         ArrayList<Edge>[] graph = new ArrayList[V];
         createGraph(graph);
 
         getBridge(graph, V);
         getAP(graph, V);
     }
+
+
+    
 }
